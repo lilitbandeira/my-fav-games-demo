@@ -16,9 +16,9 @@ jobs:
         with: 
           node-version: 20
       - name: Install Dependencies
-        uses: npm install
+        run: npm install
       - name: Generate Deployment Image
-        uses: zip -r my-fav-games-demo.zip . -x '*.git*' -x '*node_modules/*' -x '*env*'
+        run: zip -r my-fav-games-demo.zip . -x '*.git*' -x '*node_modules/*' -x '*env*'
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v22
         with:
