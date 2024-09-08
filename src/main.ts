@@ -7,7 +7,7 @@ config();
 
 const configService = new ConfigService();
 
-const port = +configService.get<number>('APP_PORT');
+const port = +configService.get<number>('APP_PORT') || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
