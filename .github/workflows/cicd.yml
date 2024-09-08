@@ -28,5 +28,5 @@ jobs:
           environment_name: 'My-fav-games-demo-env'
           version_label: ${{ github.sha }}
           region: us-east-1
-          deployment_package: nodejs-app-build.zip
+          deployment_package: my-fav-games-demo.zip
 
