@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get<string>('DB_HOST'),
@@ -14,11 +16,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         database: configService.get<string>('DB_NAME'),
         entities: [__dirname + '/entities/**'],
         migrations: [__dirname + '/migrations/*.ts'],
+        autoLoadEntities: true,
         synchronize: false,
-      }),
-      inject: [ConfigService]
+        ...(configService.get('DB_SSL') ? {
+          ssl:true,
+          extra: {
+            ssl: {
+              rejectUnauthorized: false
+            }
+          },
+        } : {})
+      })
   }),
-
   ]
 })
 export class DbModule {}
