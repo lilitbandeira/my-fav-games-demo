@@ -6,7 +6,7 @@ config();
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  url: process.env.DB_URL || 'localhost',
+  url: process.env.DB_URL,
   entities: [GameEntity],
   synchronize: false,
   migrations: [__dirname + '/migrations/*.ts'],
